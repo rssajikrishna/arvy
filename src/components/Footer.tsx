@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
+import { haptic } from '../lib/haptic';
 
 const footerLinks = {
   Approach:  [
@@ -33,9 +34,11 @@ export default function Footer() {
         body: JSON.stringify({ email }),
       });
       if (!res.ok) throw new Error();
+      haptic.success();
       setSubState('done');
       setEmail('');
     } catch {
+      haptic.error();
       setSubState('error');
     }
   };
@@ -58,7 +61,8 @@ export default function Footer() {
           </div>
           <Link
             to="/book"
-            className="group inline-flex items-center gap-4 bg-brand-blue text-white px-10 py-5 rounded-md font-bold text-sm tracking-wide transition-all hover:bg-opacity-90 hover:shadow-2xl hover:shadow-brand-blue/25 active:scale-[0.98]"
+            onClick={() => haptic.medium()}
+            className="group inline-flex items-center gap-4 bg-brand-blue text-white px-10 py-5 rounded-md font-bold text-sm tracking-wide btn-glow shadow-lg shadow-brand-blue/25 active:scale-[0.97]"
           >
             Book a discovery call
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" strokeWidth={2} />

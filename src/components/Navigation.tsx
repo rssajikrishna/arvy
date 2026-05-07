@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import ScrollProgress from './ScrollProgress';
+import { haptic } from '../lib/haptic';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,18 +26,23 @@ export default function Navigation() {
     { name: 'FAQ',         href: '/#faq' },
   ];
 
+  const toggleMenu = () => {
+    haptic.light();
+    setIsOpen(v => !v);
+  };
+
   return (
     <>
       <ScrollProgress />
       <nav
         className={`fixed top-[2px] w-full z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-xl border-b border-brand-border py-4 shadow-sm shadow-black/5'
+            ? 'bg-white/90 backdrop-blur-2xl border-b border-brand-border/60 py-4 shadow-sm shadow-black/[0.04]'
             : 'bg-transparent py-7'
         }`}
       >
         <div className="max-container flex justify-between items-center text-sm font-bold tracking-tight">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
+          <Link to="/" className="hover:opacity-85 transition-opacity" onClick={() => haptic.select()}>
             <Logo className="h-10" />
           </Link>
 
@@ -46,6 +52,7 @@ export default function Navigation() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={() => haptic.select()}
                 className="text-brand-gray hover:text-primary-black transition-colors relative group text-[13px] font-medium"
               >
                 {link.name}
@@ -54,7 +61,8 @@ export default function Navigation() {
             ))}
             <Link
               to="/book"
-              className="bg-brand-blue hover:bg-opacity-90 text-white px-6 py-2.5 rounded-md transition-all text-[11px] uppercase tracking-widest font-bold shadow-md shadow-brand-blue/20 hover:shadow-lg hover:shadow-brand-blue/30"
+              onClick={() => haptic.medium()}
+              className="bg-brand-blue hover:bg-opacity-90 text-white px-6 py-2.5 rounded-md transition-all text-[11px] uppercase tracking-widest font-bold shadow-md shadow-brand-blue/20 hover:shadow-lg hover:shadow-brand-blue/30 active:scale-[0.97]"
             >
               Book a call →
             </Link>
@@ -62,11 +70,21 @@ export default function Navigation() {
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-primary-black p-2 hover:bg-brand-bg rounded-md transition-colors"
-            onClick={() => setIsOpen(v => !v)}
+            className="md:hidden text-primary-black p-2 hover:bg-brand-bg rounded-md transition-colors active:scale-95"
+            onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isOpen ? 'close' : 'open'}
+                initial={{ opacity: 0, rotate: -90, scale: 0.7 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.7 }}
+                transition={{ duration: 0.18 }}
+              >
+                {isOpen ? <X size={22} /> : <Menu size={22} />}
+              </motion.div>
+            </AnimatePresence>
           </button>
         </div>
 
@@ -77,27 +95,36 @@ export default function Navigation() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden absolute top-full left-0 w-full bg-white border-b border-brand-border md:hidden"
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-brand-border md:hidden"
             >
               <div className="flex flex-col gap-1 p-4">
-                {navLinks.map(link => (
-                  <a
+                {navLinks.map((link, i) => (
+                  <motion.a
                     key={link.name}
                     href={link.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => { haptic.select(); setIsOpen(false); }}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.22 }}
                     className="px-4 py-3 rounded-lg text-base font-medium text-brand-gray hover:text-primary-black hover:bg-brand-bg transition-colors"
                   >
                     {link.name}
-                  </a>
+                  </motion.a>
                 ))}
-                <Link
-                  to="/book"
-                  onClick={() => setIsOpen(false)}
-                  className="mt-3 bg-brand-blue text-white px-5 py-3.5 rounded-md text-center font-bold tracking-wide text-sm"
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.22 }}
                 >
-                  Book a discovery call
-                </Link>
+                  <Link
+                    to="/book"
+                    onClick={() => { haptic.medium(); setIsOpen(false); }}
+                    className="mt-3 block bg-brand-blue text-white px-5 py-3.5 rounded-md text-center font-bold tracking-wide text-sm active:scale-[0.98]"
+                  >
+                    Book a discovery call
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           )}

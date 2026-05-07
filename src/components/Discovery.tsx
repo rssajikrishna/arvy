@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Send, CheckCircle, AlertCircle, Calendar } from 'lucide-react';
+import { haptic } from '../lib/haptic';
 
 type FormState = 'idle' | 'loading' | 'success' | 'error';
 
@@ -35,9 +36,11 @@ export default function Discovery() {
         throw new Error(data.error || 'Something went wrong.');
       }
 
+      haptic.success();
       setState('success');
       setForm({ name: '', email: '', company: '', message: '' });
     } catch (err: unknown) {
+      haptic.error();
       setState('error');
       setErrorMsg(err instanceof Error ? err.message : 'Failed to send. Please try again.');
     }

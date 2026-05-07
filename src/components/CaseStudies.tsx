@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, TrendingUp, Clock, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { haptic } from '../lib/haptic';
 
 const cases = [
   {
@@ -78,7 +79,7 @@ export default function CaseStudies() {
             {cases.map((c, i) => (
               <button
                 key={i}
-                onClick={() => setActive(i)}
+                onClick={() => { haptic.select(); setActive(i); }}
                 className={`px-5 py-2.5 rounded-full text-xs font-mono font-medium uppercase tracking-widest transition-all duration-300 ${
                   active === i
                     ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20'
