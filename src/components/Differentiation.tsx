@@ -28,7 +28,7 @@ export default function Differentiation() {
               Not an agency. <br /> Not a vendor. <br /> <span className="italic text-brand-blue">A firm.</span>
             </h2>
             <p className="text-xl text-primary-black/80 leading-relaxed font-light max-w-md">
-              The market is saturated with tool resellers. ARVY occupies a different category — operational intelligence consulting, built on diagnosis before prescription.
+              The market is saturated with tool resellers. ARVY occupies a different category — applied intelligence consulting, built on diagnosis before prescription.
             </p>
           </div>
 

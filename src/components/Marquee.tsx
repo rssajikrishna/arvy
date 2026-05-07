@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 const items = [
-  'Operational Intelligence',
+  'Applied Intelligence Consulting',
   'Applied Intelligence',
   'System-Level Thinking',
   'Measurable Outcomes',

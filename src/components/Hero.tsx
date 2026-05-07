@@ -123,7 +123,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2.5 border border-brand-blue/30 bg-brand-blue/5 text-brand-blue rounded-full px-4 py-2"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse" />
-              <span className="text-[10px] font-mono font-medium uppercase tracking-[0.25em]">Operational Intelligence Consulting</span>
+              <span className="text-[10px] font-mono font-medium uppercase tracking-[0.25em]">Applied Intelligence Consulting</span>
             </motion.div>
 
             {/* Heading — word-by-word reveal */}

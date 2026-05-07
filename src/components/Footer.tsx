@@ -77,7 +77,7 @@ export default function Footer() {
           <div className="space-y-6 lg:col-span-1">
             <Logo className="h-10 invert" />
             <p className="text-white/40 max-w-xs font-light leading-relaxed text-sm">
-              Applied Intelligence. Real Operations. The operational intelligence firm for high-growth enterprises.
+              Applied Intelligence. Real Operations. The applied intelligence firm for high-growth enterprises.
             </p>
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse" />

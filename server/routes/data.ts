@@ -91,7 +91,7 @@ const faqs = [
 
 router.get('/services', (_req, res) => {
   res.json({
-    organization: 'ARVY Operational Intelligence Consulting',
+    organization: 'ARVY Applied Intelligence Consulting',
     url: 'https://arvy.co',
     email: 'inquiries@arvy.co',
     services,
